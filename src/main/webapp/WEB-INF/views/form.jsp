@@ -205,7 +205,7 @@
                             <li>
                                 <span class="icon icon-bag"></span>
                                 <span class="summary--text"
-                                >4 worki ubrań w dobrym stanie dla dzieci</span
+                                >${donation.quantity} worki ubrań w dobrym stanie dla dzieci</span
                                 >
                             </li>
 
