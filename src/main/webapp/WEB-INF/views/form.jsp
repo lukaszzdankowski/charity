@@ -206,7 +206,7 @@
                             <li>
                                 <span class="icon icon-bag"></span>
                                 <span class="summary--text" id="bags"
-                                >3 worki ubrań w dobrym stanie dla dzieci</span
+                                >4 worki ubrań w dobrym stanie dla dzieci</span
                                 >
                             </li>
 

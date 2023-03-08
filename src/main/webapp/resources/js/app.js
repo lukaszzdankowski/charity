@@ -188,18 +188,18 @@ document.addEventListener("DOMContentLoaded", function () {
         //bags
         let bagWord;
         if (data.get("quantity") == 1) {
-            bagWord = "worek";
+            bagWord = " worek zawierający ";
         } else if (data.get("quantity") < 5) {
-            bagWord = "worki";
+            bagWord = " worki zawierające ";
         } else {
-            bagWord = "worków";
+            bagWord = " worków zawierających ";
         }
 
         let checkboxes = document.querySelectorAll("[type=checkbox]:checked");
         let categories = [];
         checkboxes.forEach(box => categories.push(box.getAttribute("data-category")));
 
-        bags.innerText = data.get("quantity") + " " + bagWord + " zawierające " + categories.join(", ");
+        bags.innerText = data.get("quantity") + bagWord + categories.join(", ");
 
         //foundation
         let select = document.querySelector("[type=radio]:checked");
