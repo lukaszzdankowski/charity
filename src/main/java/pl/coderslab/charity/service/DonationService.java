@@ -11,10 +11,7 @@ public class DonationService {
     private final DonationRepository donationRepository;
 
     public int countTotalQuantity() {
-        if (donationRepository.sumTotalQuantity() == null) {
-            return 0;
-        }
-        return donationRepository.sumTotalQuantity();
+        return donationRepository.sumTotalQuantity().orElse(0);
     }
 
     public long countTotalDonations() {
