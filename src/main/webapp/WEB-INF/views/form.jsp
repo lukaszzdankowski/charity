@@ -251,3 +251,6 @@
 </section>
 
 <jsp:include page="footer.jsp"/>
+<script src="<c:url value="resources/js/app.js"/>"></script>
+</body>
+</html>
