@@ -18,6 +18,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/","/resources/**").permitAll()
                 .antMatchers("/**").authenticated()
+//                .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login").defaultSuccessUrl("/about")
