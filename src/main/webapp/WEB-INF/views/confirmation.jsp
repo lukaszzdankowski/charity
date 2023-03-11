@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:include page="header.jsp"/>
+<jsp:include page="page-parts/header.jsp"/>
 <body>
 <header class="header--form-page">
     <nav class="container container--70">
@@ -34,6 +34,6 @@
     </div>
 </header>
 
-<jsp:include page="footer.jsp"/>
+<jsp:include page="page-parts/footer.jsp"/>
 </body>
 </html>
