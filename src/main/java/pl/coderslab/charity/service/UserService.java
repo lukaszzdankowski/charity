@@ -3,10 +3,8 @@ package pl.coderslab.charity.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.coderslab.charity.model.User;
+import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.repository.UserRepository;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

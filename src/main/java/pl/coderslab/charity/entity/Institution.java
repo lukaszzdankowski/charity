@@ -1,4 +1,4 @@
-package pl.coderslab.charity.model;
+package pl.coderslab.charity.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +12,12 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "roles")
-public class Role {
+@Table(name = "institutions")
+public class Institution {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+    private String description;
 }

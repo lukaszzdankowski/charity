@@ -2,7 +2,7 @@ package pl.coderslab.charity.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.coderslab.charity.model.Donation;
+import pl.coderslab.charity.entity.Donation;
 import pl.coderslab.charity.repository.DonationRepository;
 
 @Service
