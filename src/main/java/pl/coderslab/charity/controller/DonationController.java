@@ -26,7 +26,7 @@ public class DonationController {
     }
 
     @PostMapping("/form")
-    public String saveDonation(Donation donation){
+    public String saveDonation(Donation donation) {
         donationService.save(donation);
         return "user/donation/confirmation";
     }

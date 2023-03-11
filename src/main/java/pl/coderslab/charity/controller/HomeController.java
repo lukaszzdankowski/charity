@@ -21,11 +21,12 @@ public class HomeController {
 
     @RequestMapping("/")
     public String homeAction(Model model) {
-        model.addAttribute("institutionList",institutionService.getInstitutions());
-        model.addAttribute("quantityTotal",donationService.countTotalQuantity());
-        model.addAttribute("donationsTotal",donationService.countTotalDonations());
+        model.addAttribute("institutionList", institutionService.getInstitutions());
+        model.addAttribute("quantityTotal", donationService.countTotalQuantity());
+        model.addAttribute("donationsTotal", donationService.countTotalDonations());
         return "index";
     }
+
     @GetMapping("/login")
     public String login() {
         return "login";
@@ -36,8 +37,9 @@ public class HomeController {
         model.addAttribute("user", new User());
         return "register";
     }
+
     @PostMapping("/register")
-    public String saveUser(User user){
+    public String saveUser(User user) {
         userService.save(user);
         return "redirect: ";
     }
