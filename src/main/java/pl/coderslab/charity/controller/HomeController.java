@@ -11,6 +11,8 @@ import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
 import pl.coderslab.charity.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -42,6 +44,14 @@ public class HomeController {
     public String saveUser(User user) {
         userService.save(user);
         return "redirect: ";
+    }
+
+    @GetMapping("/default")
+    public String loginRedirect(HttpServletRequest request) {
+        if (request.isUserInRole("ROLE_ADMIN")) {//czy to nie problem, że ma dwie role
+            return "redirect:admin/home";
+        }
+        return "redirect:user/home";
     }
 
 }

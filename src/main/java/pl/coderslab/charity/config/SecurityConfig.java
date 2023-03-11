@@ -16,10 +16,16 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/register", "/resources/**").permitAll()
-                .antMatchers("/**").authenticated()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasRole("USER")
+//                .antMatchers("/**").permitAll()
+                .anyRequest().authenticated()//czy to porzebne?
                 .and()
-                .formLogin()
-                .loginPage("/login").defaultSuccessUrl("/adminHome");
+                .httpBasic()//czy to porzebne?
+                .and()
+                .formLogin().loginPage("/login").defaultSuccessUrl("/default")
+                .and()
+                .logout().logoutSuccessUrl("/");
         return http.build();
     }
 
@@ -27,4 +33,5 @@ public class SecurityConfig {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
