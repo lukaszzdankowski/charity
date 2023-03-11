@@ -3,7 +3,6 @@ package pl.coderslab.charity.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,18 +15,16 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/resources/**").permitAll()
+                .antMatchers("/", "/login", "/resources/**").permitAll()
                 .antMatchers("/**").authenticated()
-//                .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login").defaultSuccessUrl("/about")
-                .permitAll()//z filmiku
-        ;
+                .loginPage("/login").defaultSuccessUrl("/adminHome");
         return http.build();
     }
+
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
