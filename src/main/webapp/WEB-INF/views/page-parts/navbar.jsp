@@ -4,21 +4,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <nav class="container container--70">
-<%--not logged--%>
+    <%--not logged--%>
     <ul class="nav--actions">
         <li><a href="" class="btn btn--small btn--without-border">Zaloguj</a></li>
         <li><a href="#" class="btn btn--small btn--highlighted">Załóż konto</a></li>
     </ul>
-<%--logged--%>
+    <%--logged--%>
     <ul class="nav--actions">
-        <li class="logged-user">Witaj Agata<ul class="dropdown">
+        <li class="logged-user">Witaj Agata
+            <ul class="dropdown">
                 <li><a href="#">Profil</a></li>
                 <li><a href="#">Moje zbiórki</a></li>
                 <li><a href="#">Wyloguj</a></li>
             </ul>
         </li>
     </ul>
-<%--common--%>
+    <%--common--%>
     <ul>
         <li><a href="" class="btn btn--without-border active">Start</a></li>
         <li><a href="#steps" class="btn btn--without-border">O co chodzi?</a></li>
