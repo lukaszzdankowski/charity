@@ -22,13 +22,13 @@ public class DonationController {
         model.addAttribute("donation", new Donation());
         model.addAttribute("categoryList", categoryService.getCategories());
         model.addAttribute("institutionList", institutionService.getInstitutions());
-        return "form";
+        return "user/donation/form";
     }
 
     @PostMapping("/form")
     public String saveDonation(Donation donation){
         donationService.save(donation);
-        return "confirmation";
+        return "user/donation/confirmation";
     }
 
 }
