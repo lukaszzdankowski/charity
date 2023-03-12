@@ -60,7 +60,9 @@ public class EmailSenderService {
         stringBuilder
                 .append("Cieszymy się, że jesteś zainteresowany pomaganiem innym." + "\n")
                 .append("Kliknij poniższy link aby potwierdzić rejestrację:" + "\n")
-                .append("http://localhost:8080/registry-confirmation?" + BCrypt.hashpw(email, BCrypt.gensalt()));
+                .append("http://localhost:8080/registry-confirmation/"
+                        + email + "/"
+                        + BCrypt.hashpw(email, BCrypt.gensalt()));
         mimeMessageHelper.setText(stringBuilder.toString());
         javaMailSender.send(mimeMessage);
     }

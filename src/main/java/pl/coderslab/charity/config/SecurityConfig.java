@@ -15,7 +15,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/register", "/resources/**").permitAll()
+                .antMatchers("/", "/login", "/register", "/resources/**", "/registry-confirmation/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasRole("USER")
 //                .antMatchers("/**").permitAll()

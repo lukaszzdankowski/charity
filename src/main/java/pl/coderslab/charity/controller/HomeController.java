@@ -1,13 +1,13 @@
 package pl.coderslab.charity.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.repository.RoleRepository;
+import pl.coderslab.charity.repository.UserRepository;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.EmailSenderService;
 import pl.coderslab.charity.service.InstitutionService;
@@ -25,6 +25,7 @@ public class HomeController {
     private final UserService userService;
     private final EmailSenderService emailSenderService;
     private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
     @RequestMapping("/")
     public String homeAction(Model model) {
@@ -51,6 +52,19 @@ public class HomeController {
         emailSenderService.sendRegistration(user.getEmail());
         userService.save(user);
         return "redirect: ";
+    }
+
+    @GetMapping("/registry-confirmation/{email}/{token}")
+    @ResponseBody
+    private String registryConfirmation(@PathVariable String email,
+                                        @PathVariable String token) {
+        if (BCrypt.checkpw(email, token)) {
+            User user = userRepository.findByEmail(email).orElse(null);
+            user.setActive(true);
+            userService.save(user);//czy inaczej?
+            return "confirmed";
+        }
+        return "not-confirmed";
     }
 
     @GetMapping("/default")
