@@ -19,7 +19,7 @@ public class SecurityConfig {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasRole("USER")
 //                .antMatchers("/**").permitAll()
-                .anyRequest().authenticated()//czy to porzebne?
+                .anyRequest().authenticated()
                 .and()
                 .httpBasic()//czy to porzebne?
                 .and()
