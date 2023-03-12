@@ -22,6 +22,7 @@ public class User {
     private String surname;
     private String email;
     private String password;
+    private boolean isActive = false;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

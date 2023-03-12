@@ -3,6 +3,7 @@ package pl.coderslab.charity.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import pl.coderslab.charity.entity.Donation;
 import pl.coderslab.charity.entity.User;
@@ -44,6 +45,22 @@ public class EmailSenderService {
                 .append("Dziękujemy za przekazanie darów" + "\n")
                 .append("Kurier pojawi się u Pani/Pana w dniu: " + donation.getPickUpDate() + "\n")
                 .append("o godzinie: " + donation.getPickUpTime() + "\n");
+        mimeMessageHelper.setText(stringBuilder.toString());
+        javaMailSender.send(mimeMessage);
+    }
+
+    public void sendRegistration(String email) throws MessagingException {
+        MimeMessage mimeMessage = prepareMail();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+        mimeMessageHelper.setSubject("Oddam w dobre ręce - potwierdzenie rejestracji");
+        mimeMessageHelper.setTo(email);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append("Cieszymy się, że jesteś zainteresowany pomaganiem innym." + "\n")
+                .append("Kliknij poniższy link aby potwierdzić rejestrację:" + "\n")
+                .append("http://localhost:8080/registry-confirmation?" + BCrypt.hashpw(email, BCrypt.gensalt()));
         mimeMessageHelper.setText(stringBuilder.toString());
         javaMailSender.send(mimeMessage);
     }

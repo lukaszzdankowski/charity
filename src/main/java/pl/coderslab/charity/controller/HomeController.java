@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.service.DonationService;
+import pl.coderslab.charity.service.EmailSenderService;
 import pl.coderslab.charity.service.InstitutionService;
 import pl.coderslab.charity.service.UserService;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -20,6 +22,7 @@ public class HomeController {
     private final InstitutionService institutionService;
     private final DonationService donationService;
     private final UserService userService;
+    private final EmailSenderService emailSenderService;
 
     @RequestMapping("/")
     public String homeAction(Model model) {
@@ -41,8 +44,9 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    public String saveUser(User user) {
+    public String saveUser(User user) throws MessagingException {
         userService.save(user);
+        emailSenderService.sendRegistration(user.getEmail());
         return "redirect: ";
     }
 
@@ -53,5 +57,4 @@ public class HomeController {
         }
         return "redirect:user/home";
     }
-
 }
