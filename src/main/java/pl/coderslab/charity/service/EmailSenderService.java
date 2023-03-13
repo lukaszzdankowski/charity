@@ -46,6 +46,7 @@ public class EmailSenderService {
                 .append("Kurier pojawi się u Pani/Pana w dniu: " + donation.getPickUpDate() + "\n")
                 .append("o godzinie: " + donation.getPickUpTime() + "\n");
         mimeMessageHelper.setText(stringBuilder.toString());
+
         javaMailSender.send(mimeMessage);
     }
 
@@ -64,16 +65,24 @@ public class EmailSenderService {
                         + email + "/"
                         + BCrypt.hashpw(email, BCrypt.gensalt()));
         mimeMessageHelper.setText(stringBuilder.toString());
+
         javaMailSender.send(mimeMessage);
     }
 
-    public void sendEmail(String emailAddress, String subject, String body) throws MessagingException {
+    public void sendReminder(String email) throws MessagingException {
         MimeMessage mimeMessage = prepareMail();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
-        mimeMessageHelper.setTo(emailAddress);
-        mimeMessageHelper.setSubject(subject);
-        mimeMessageHelper.setText(body);
+        mimeMessageHelper.setSubject("Oddam w dobre ręce - resetowanie hasła");
+        mimeMessageHelper.setTo(email);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append("Kliknij poniższy link aby zresetować hasło:" + "\n")
+                .append("http://localhost:8080/password-reset/"
+                        + email + "/"
+                        + BCrypt.hashpw(email, BCrypt.gensalt()));
+        mimeMessageHelper.setText(stringBuilder.toString());
 
         javaMailSender.send(mimeMessage);
     }

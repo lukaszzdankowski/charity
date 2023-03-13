@@ -15,7 +15,8 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/register", "/resources/**", "/registry-confirmation/**").permitAll()
+                .antMatchers("/", "/login", "/register", "/resources/**",
+                        "/registry-confirmation/**", "/reminder", "/password-reset/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasRole("USER")
 //                .antMatchers("/**").permitAll()
@@ -23,7 +24,7 @@ public class SecurityConfig {
                 .and()
                 .httpBasic()//czy to porzebne?
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/default")
+                .formLogin().loginPage("/login").defaultSuccessUrl("/router")
                 .and()
                 .logout().logoutSuccessUrl("/");
         return http.build();

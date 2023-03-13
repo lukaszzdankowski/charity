@@ -40,6 +40,14 @@ public class HomeController {
         return "login";
     }
 
+    @GetMapping("/router")
+    public String loginRedirect(HttpServletRequest request) {
+        if (request.isUserInRole("ROLE_ADMIN")) {//czy to nie problem, że ma dwie role
+            return "redirect:admin/home";
+        }
+        return "redirect:user/home";
+    }
+
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
@@ -67,11 +75,40 @@ public class HomeController {
         return "not-confirmed";
     }
 
-    @GetMapping("/default")
-    public String loginRedirect(HttpServletRequest request) {
-        if (request.isUserInRole("ROLE_ADMIN")) {//czy to nie problem, że ma dwie role
-            return "redirect:admin/home";
+    @GetMapping("/reminder")
+    public String remindPassword() {
+        return "reminder";
+    }
+
+    @PostMapping("/reminder")
+    @ResponseBody
+    public String remindPasswordSend(@RequestParam String email) throws MessagingException {
+        User user = userRepository.findByEmail(email).orElse(null);
+        if (user == null) {
+            return "Nie odnaleziono takiego email w bazie";
         }
-        return "redirect:user/home";
+        emailSenderService.sendReminder(email);
+        return "Wiadomość e-mail została wysłana. Sprawdź skrzynkę";
+    }
+
+    @GetMapping("/password-reset/{email}/{token}")
+    private String passwordResetForm(@PathVariable String email,
+                                     @PathVariable String token,
+                                     Model model) {
+        if (BCrypt.checkpw(email, token)) {
+            model.addAttribute("email", email);
+            return "paswordResetForm";
+        }
+        return "badToken";
+    }
+
+    @PostMapping("/password-reset")
+    @ResponseBody
+    private String passwordReset(@RequestParam String email,
+                                 @RequestParam String password) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        user.setPassword(password);
+        userService.save(user);
+        return "password changed";
     }
 }
