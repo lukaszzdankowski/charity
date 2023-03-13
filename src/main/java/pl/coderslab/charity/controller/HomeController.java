@@ -58,7 +58,7 @@ public class HomeController {
     public String saveUser(User user) throws MessagingException {
         user.getRoles().add(roleRepository.getById(2L));
         emailSenderService.sendRegistration(user.getEmail());
-        userService.save(user);
+        userService.saveWithHash(user);
         return "redirect: ";
     }
 
@@ -108,7 +108,7 @@ public class HomeController {
                                  @RequestParam String password) {
         User user = userRepository.findByEmail(email).orElse(null);
         user.setPassword(password);
-        userService.save(user);
+        userService.saveWithHash(user);
         return "password changed";
     }
 }
