@@ -11,7 +11,7 @@
 
 <section class="login-page">
     <h2>Podaj nowe hasło</h2>
-    <form method="post" action="/password-reset">
+    <form method="post" action="/guest/password-reset">
         <div class="form-group">
             <input type="password" name="password" placeholder="Hasło"/>
         </div>

@@ -15,8 +15,8 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/register", "/resources/**", "/test", "/token/**",
-                        "/registry-confirmation/**", "/reminder", "/password-reset/**").permitAll()
+                .antMatchers("/", "/resources/**", "/guest/**", "/test").permitAll()
+//                .antMatchers("/test").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasRole("USER")
 //                .antMatchers("/**").permitAll()
@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .and()
                 .httpBasic()//czy to porzebne?
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/router")
+                .formLogin().loginPage("/guest/login").defaultSuccessUrl("/router")//nie wiem czemu router nie chodzi po gueście
                 .and()
                 .logout().logoutSuccessUrl("/");
         return http.build();

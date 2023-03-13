@@ -64,7 +64,7 @@ public class EmailSenderService {
         stringBuilder
                 .append("Cieszymy się, że jesteś zainteresowany pomaganiem innym." + "\n")
                 .append("Kliknij poniższy link aby potwierdzić rejestrację:" + "\n")
-                .append("http://localhost:8080/token/"
+                .append("http://localhost:8080/guest/token/"
                         + token.getHashCode());
         mimeMessageHelper.setText(stringBuilder.toString());
 
@@ -83,7 +83,7 @@ public class EmailSenderService {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append("Kliknij poniższy link aby zresetować hasło:" + "\n")
-                .append("http://localhost:8080/token/"
+                .append("http://localhost:8080/guest/token/"
                         + token.getHashCode());
         mimeMessageHelper.setText(stringBuilder.toString());
 

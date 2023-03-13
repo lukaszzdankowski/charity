@@ -7,32 +7,32 @@
 <body>
 <header class="header--form-page">
     <jsp:include page="../../page-parts/navbar.jsp"/>
-<div class="slogan container container--90">
-    <div class="slogan--item">
-        <h1>
-            Oddaj rzeczy, których już nie chcesz<br />
-            <span class="uppercase">potrzebującym</span>
-        </h1>
+    <div class="slogan container container--90">
+        <div class="slogan--item">
+            <h1>
+                Oddaj rzeczy, których już nie chcesz<br/>
+                <span class="uppercase">potrzebującym</span>
+            </h1>
 
-        <div class="slogan--steps">
-            <div class="slogan--steps-title">Wystarczą 4 proste kroki:</div>
-            <ul class="slogan--steps-boxes">
-                <li>
-                    <div><em>1</em><span>Wybierz rzeczy</span></div>
-                </li>
-                <li>
-                    <div><em>2</em><span>Spakuj je w worki</span></div>
-                </li>
-                <li>
-                    <div><em>3</em><span>Wybierz fundację</span></div>
-                </li>
-                <li>
-                    <div><em>4</em><span>Zamów kuriera</span></div>
-                </li>
-            </ul>
+            <div class="slogan--steps">
+                <div class="slogan--steps-title">Wystarczą 4 proste kroki:</div>
+                <ul class="slogan--steps-boxes">
+                    <li>
+                        <div><em>1</em><span>Wybierz rzeczy</span></div>
+                    </li>
+                    <li>
+                        <div><em>2</em><span>Spakuj je w worki</span></div>
+                    </li>
+                    <li>
+                        <div><em>3</em><span>Wybierz fundację</span></div>
+                    </li>
+                    <li>
+                        <div><em>4</em><span>Zamów kuriera</span></div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 </header>
 
 <section class="form--steps">
@@ -58,26 +58,26 @@
     <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/4</div>
 
-            <form:form method="post" modelAttribute="donation" id="form-input">
+        <form:form method="post" modelAttribute="donation" id="form-input">
 
             <!-- STEP 1: class .active is switching steps -->
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
                 <c:forEach items="${categoryList}" var="item">
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input
-                                type="checkbox"
-                                name="categories"
-                                data-category="${item.name}"
-                                value="${item.id}"
-                        />
-                        <span class="checkbox"></span>
-                        <span class="description"
-                        >${item.name}</span
-                        >
-                    </label>
-                </div>
+                    <div class="form-group form-group--checkbox">
+                        <label>
+                            <input
+                                    type="checkbox"
+                                    name="categories"
+                                    data-category="${item.name}"
+                                    value="${item.id}"
+                            />
+                            <span class="checkbox"></span>
+                            <span class="description"
+                            >${item.name}</span
+                            >
+                        </label>
+                    </div>
                 </c:forEach>
 
                 <div class="form-group form-group--buttons">
@@ -92,7 +92,7 @@
                 <div class="form-group form-group--inline">
                     <label>
                         Liczba 60l worków:
-                        <input type="number" name="quantity" step="1" min="1" />
+                        <input type="number" name="quantity" step="1" min="1"/>
                     </label>
                 </div>
 
@@ -106,19 +106,19 @@
             <div data-step="3">
                 <h3>Wybierz organizację, której chcesz pomóc:</h3>
 
-                <c:forEach items="${institutionList}" var = "item">
-                <div class="form-group form-group--checkbox">
-                    <label>
-                        <input type="radio" name="institution" value="${item.id}" data-institution="${item.name}" />
-                        <span class="checkbox radio"></span>
-                        <span class="description">
+                <c:forEach items="${institutionList}" var="item">
+                    <div class="form-group form-group--checkbox">
+                        <label>
+                            <input type="radio" name="institution" value="${item.id}" data-institution="${item.name}"/>
+                            <span class="checkbox radio"></span>
+                            <span class="description">
                   <div class="title">Fundacja “${item.name}”</div>
                   <div class="subtitle">
                     Cel i misja: ${item.description}
                   </div>
                 </span>
-                    </label>
-                </div>
+                        </label>
+                    </div>
                 </c:forEach>
 
                 <div class="form-group form-group--buttons">
@@ -135,16 +135,16 @@
                     <div class="form-section--column">
                         <h4>Adres odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Ulica <input type="text" name="street" /> </label>
+                            <label> Ulica <input type="text" name="street"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Miasto <input type="text" name="city" /> </label>
+                            <label> Miasto <input type="text" name="city"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
-                                Kod pocztowy <input type="text" name="zipCode" />
+                                Kod pocztowy <input type="text" name="zipCode"/>
                             </label>
                         </div>
 
@@ -153,11 +153,11 @@
                     <div class="form-section--column">
                         <h4>Termin odbioru</h4>
                         <div class="form-group form-group--inline">
-                            <label> Data <input type="date" name="pickUpDate" /> </label>
+                            <label> Data <input type="date" name="pickUpDate"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> Godzina <input type="time" name="pickUpTime" /> </label>
+                            <label> Godzina <input type="time" name="pickUpTime"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
@@ -224,11 +224,11 @@
                     <button type="submit" class="btn">Potwierdzam</button>
                 </div>
             </div>
-            </form:form>
+        </form:form>
     </div>
 </section>
 
 <jsp:include page="../../page-parts/footer.jsp"/>
-<script src="<c:url value="resources/js/app.js"/>"></script>
+<script src="<c:url value="${pageContext.request.contextPath}/resources/js/app.js"/>"></script>
 </body>
 </html>
