@@ -3,9 +3,9 @@ package pl.coderslab.charity.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import pl.coderslab.charity.entity.Donation;
+import pl.coderslab.charity.entity.Token;
 import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.repository.UserRepository;
 
@@ -19,6 +19,7 @@ import java.security.Principal;
 public class EmailSenderService {
     private final JavaMailSender javaMailSender;
     private final UserRepository userRepository;
+    private final TokenService tokenService;
 
     public MimeMessage prepareMail() throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -50,38 +51,40 @@ public class EmailSenderService {
         javaMailSender.send(mimeMessage);
     }
 
-    public void sendRegistration(String email) throws MessagingException {
+    public void sendRegistration(User user) throws MessagingException {
         MimeMessage mimeMessage = prepareMail();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
         mimeMessageHelper.setSubject("Oddam w dobre ręce - potwierdzenie rejestracji");
-        mimeMessageHelper.setTo(email);
+        mimeMessageHelper.setTo(user.getEmail());
+
+        Token token = tokenService.generateToken(user, "registration");
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append("Cieszymy się, że jesteś zainteresowany pomaganiem innym." + "\n")
                 .append("Kliknij poniższy link aby potwierdzić rejestrację:" + "\n")
-                .append("http://localhost:8080/registry-confirmation/"
-                        + email + "/"
-                        + BCrypt.hashpw(email, BCrypt.gensalt()));
+                .append("http://localhost:8080/token/"
+                        + token.getHashCode());
         mimeMessageHelper.setText(stringBuilder.toString());
 
         javaMailSender.send(mimeMessage);
     }
 
-    public void sendReminder(String email) throws MessagingException {
+    public void sendReminder(User user) throws MessagingException {
         MimeMessage mimeMessage = prepareMail();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
         mimeMessageHelper.setSubject("Oddam w dobre ręce - resetowanie hasła");
-        mimeMessageHelper.setTo(email);
+        mimeMessageHelper.setTo(user.getEmail());
+
+        Token token = tokenService.generateToken(user, "passwordReset");
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append("Kliknij poniższy link aby zresetować hasło:" + "\n")
-                .append("http://localhost:8080/password-reset/"
-                        + email + "/"
-                        + BCrypt.hashpw(email, BCrypt.gensalt()));
+                .append("http://localhost:8080/token/"
+                        + token.getHashCode());
         mimeMessageHelper.setText(stringBuilder.toString());
 
         javaMailSender.send(mimeMessage);
