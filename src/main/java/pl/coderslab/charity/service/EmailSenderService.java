@@ -27,7 +27,7 @@ public class EmailSenderService {
 
         mimeMessageHelper.setFrom("lukasz.zdankowski.appbot@gmail.com");
         File file = new File("src/main/resources/Files/signature.svg");
-        mimeMessageHelper.addAttachment("With love...", file);
+        mimeMessageHelper.addAttachment("With love...", file);//może nazwy nie nadawać
 
         return mimeMessage;
     }

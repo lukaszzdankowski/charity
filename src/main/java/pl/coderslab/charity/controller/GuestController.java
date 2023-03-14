@@ -39,7 +39,7 @@ public class GuestController {
     @PostMapping("/register")
     @ResponseBody
     public String saveUser(User user) throws MessagingException {
-        user.getRoles().add(roleRepository.getById(2L));//czy można w konstruktorze
+        user.getRoles().add(roleRepository.getById(2L));//czy można w konstruktorze-lepiej w servisie
         userService.saveWithHash(user);
         emailSenderService.sendRegistration(user);
         return "sprawdź skrzynkę";
@@ -63,8 +63,8 @@ public class GuestController {
 
     @PostMapping("/password-reset")
     @ResponseBody
-    private String passwordReset(@RequestParam String email,
-                                 @RequestParam String password) {
+    public String passwordReset(@RequestParam String email,
+                                @RequestParam String password) {
         User user = userRepository.findByEmail(email).orElse(null);
         user.setPassword(password);
         userService.saveWithHash(user);
@@ -72,7 +72,7 @@ public class GuestController {
     }
 
     @GetMapping("/token/{tokenString}")
-    private String tokenHandler(@PathVariable String tokenString, Model model) {
+    public String tokenHandler(@PathVariable String tokenString, Model model) {
         Token token = tokenRepository.findById(tokenString).orElse(null);
         if (token == null) {
             return "token-not-found";

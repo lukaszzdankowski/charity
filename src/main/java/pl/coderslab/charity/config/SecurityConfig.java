@@ -6,12 +6,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     @Bean
-    protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
@@ -24,9 +25,10 @@ public class SecurityConfig {
                 .and()
                 .httpBasic()//czy to porzebne?
                 .and()
-                .formLogin().loginPage("/guest/login").defaultSuccessUrl("/router")//nie wiem czemu router nie chodzi po gueście
+                .formLogin().loginPage("/guest/login").successHandler(myAuthenticationSuccessHandler())//nie wiem czemu router nie chodzi po gueście
                 .and()
                 .logout().logoutSuccessUrl("/");
+
         return http.build();
     }
 
@@ -35,4 +37,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+        return new SimpleUrlAuthenticationSuccessHandlerImpl();
+    }
 }
