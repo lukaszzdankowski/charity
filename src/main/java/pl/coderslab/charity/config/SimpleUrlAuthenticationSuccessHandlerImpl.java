@@ -7,7 +7,6 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,11 +17,11 @@ public class SimpleUrlAuthenticationSuccessHandlerImpl implements Authentication
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+                                        Authentication authentication) throws IOException {
         String targetURL;
         SimpleGrantedAuthority roleAdmin = new SimpleGrantedAuthority("ROLE_ADMIN");
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        if (authorities.contains(roleAdmin)) {
+        if (authorities.contains(roleAdmin)) {//tu refacor można
             targetURL = "/admin/home";
         } else {
             targetURL = "/user/home";

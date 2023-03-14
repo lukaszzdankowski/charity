@@ -17,7 +17,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final EmailSenderService emailSenderService;
+    private final EmailService emailService;
     private final TokenRepository tokenRepository;
 
     public void saveWithHash(User user) {
@@ -28,7 +28,7 @@ public class UserService {
     public void saveNewUser(User user) throws MessagingException {
         user.getRoles().add(roleRepository.getById(2L));
         saveWithHash(user);
-        emailSenderService.sendRegistration(user);
+        emailService.sendRegistration(user);
     }
 
     public String setUserActive(String tokenString) {
@@ -48,7 +48,7 @@ public class UserService {
         if (user == null) {
             return "guest/password-forgot-no-email";
         }
-        emailSenderService.sendReminder(user);
+        emailService.sendReminder(user);
         return "guest/password-forgot-sent";
     }
 

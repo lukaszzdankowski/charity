@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.entity.Donation;
 import pl.coderslab.charity.service.CategoryService;
 import pl.coderslab.charity.service.DonationService;
-import pl.coderslab.charity.service.EmailSenderService;
 import pl.coderslab.charity.service.InstitutionService;
 
 import javax.mail.MessagingException;
@@ -22,7 +21,6 @@ public class UserController {
     private final CategoryService categoryService;
     private final InstitutionService institutionService;
     private final DonationService donationService;
-    private final EmailSenderService emailSenderService;
 
     @GetMapping("/home")
     public String userHome() {

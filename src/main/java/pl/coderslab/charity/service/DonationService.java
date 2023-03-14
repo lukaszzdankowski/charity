@@ -12,7 +12,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class DonationService {
     private final DonationRepository donationRepository;
-    private final EmailSenderService emailSenderService;
+    private final EmailService emailService;
 
     public int countTotalQuantity() {
         return donationRepository.sumTotalQuantity().orElse(0);
@@ -24,6 +24,6 @@ public class DonationService {
 
     public void saveAndSendMessage(Donation donation, Principal principal) throws MessagingException {
         donationRepository.save(donation);
-        emailSenderService.sendSummary(principal, donation);
+        emailService.sendSummary(principal, donation);
     }
 }

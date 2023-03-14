@@ -21,8 +21,7 @@
 
         <input type="hidden" name="email" value="${email}">
         <div class="form-group form-group--buttons">
-            <a href="#" class="btn btn--without-border">Załóż konto</a>
-            <button class="btn" type="submit">Zaloguj się</button>
+            <button class="btn" type="submit">Zmień hasło</button>
         </div>
     </form>
 </section>
