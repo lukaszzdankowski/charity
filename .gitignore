@@ -1,5 +1,6 @@
 /src/main/java/pl/coderslab/charity/test
-/src/main/resources/
+/src/main/resources/application.properties
+/src/main/webapp/WEB-INF/views/user/z.jsp
 
 HELP.md
 /target/

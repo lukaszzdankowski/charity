@@ -3,10 +3,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:include page="../../page-parts/header.jsp"/>
+<jsp:include page="../page-parts/header.jsp"/>
 <body>
 <header class="header--form-page">
-    <jsp:include page="../../page-parts/navbar.jsp"/>
+    <jsp:include page="../page-parts/navbar.jsp"/>
     <div class="slogan container container--90">
         <div class="slogan--item">
             <h1>
@@ -228,7 +228,7 @@
     </div>
 </section>
 
-<jsp:include page="../../page-parts/footer.jsp"/>
+<jsp:include page="../page-parts/footer.jsp"/>
 <script src="<c:url value="${pageContext.request.contextPath}/resources/js/app.js"/>"></script>
 </body>
 </html>

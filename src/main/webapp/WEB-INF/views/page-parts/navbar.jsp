@@ -6,8 +6,9 @@
 <nav class="container container--70">
     <%--not logged--%>
     <ul class="nav--actions">
-        <li><a href="" class="btn btn--small btn--without-border">Zaloguj</a></li>
-        <li><a href="#" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+        <li><a href="<c:url value="/login"/>" class="btn btn--small btn--without-border">Zaloguj</a></li>
+        <li><a href="<c:url value="/guest/register"/>" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+        <li><a href="<c:url value="/guest/password-forgot"/>" class="btn btn--small btn--highlighted">Zapomniałem hasła</a></li>
     </ul>
     <%--logged--%>
     <ul class="nav--actions">
@@ -15,7 +16,7 @@
             <ul class="dropdown">
                 <li><a href="#">Profil</a></li>
                 <li><a href="#">Moje zbiórki</a></li>
-                <li><a href="#">Wyloguj</a></li>
+                <li><a href="<c:url value="/logout"/>">Wyloguj</a></li>
             </ul>
         </li>
     </ul>

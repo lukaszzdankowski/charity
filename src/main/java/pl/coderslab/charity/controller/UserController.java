@@ -25,8 +25,8 @@ public class UserController {
     private final EmailSenderService emailSenderService;
 
     @GetMapping("/home")
-    public String adminHome() {
-        return "user/userHome";
+    public String userHome() {
+        return "user/home-user";
     }
 
     @GetMapping("/donation/form")
@@ -34,13 +34,12 @@ public class UserController {
         model.addAttribute("donation", new Donation());
         model.addAttribute("categoryList", categoryService.getCategories());
         model.addAttribute("institutionList", institutionService.getInstitutions());
-        return "user/donation/form";
+        return "user/donation-form";
     }
 
     @PostMapping("/donation/form")
     public String saveDonation(Donation donation, Principal principal) throws MessagingException {
-        donationService.save(donation);
-        emailSenderService.sendSummary(principal, donation);
-        return "user/donation/confirmation";
+        donationService.saveAndSendMessage(donation, principal);
+        return "user/donation-confirmation";
     }
 }

@@ -25,7 +25,7 @@ public class HomeController {
     private final TokenRepository tokenRepository;
 
     @RequestMapping("/")
-    public String homeAction(Model model) {
+    public String homePage(Model model) {
         model.addAttribute("institutionList", institutionService.getInstitutions());
         model.addAttribute("quantityTotal", donationService.countTotalQuantity());
         model.addAttribute("donationsTotal", donationService.countTotalDonations());
