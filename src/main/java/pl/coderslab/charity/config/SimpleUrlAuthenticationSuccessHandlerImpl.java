@@ -19,16 +19,19 @@ public class SimpleUrlAuthenticationSuccessHandlerImpl implements Authentication
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
         String targetURL;
-        SimpleGrantedAuthority roleAdmin = new SimpleGrantedAuthority("ROLE_ADMIN");
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        if (authorities.contains(roleAdmin)) {//tu refacor można
+        if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             targetURL = "/admin/home";
-        } else {
+        } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             targetURL = "/user/home";
-        }//co w przypadku braku roli
+        } else {
+            throw new IllegalStateException("Role not found for this user");//czy ok obsługa braku roli dla użytkownika
+        }
 
         RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
         redirectStrategy.sendRedirect(request, response, targetURL);
+
+//        clearAuthenticationAttributes(request); do czego to słuzy
 
     }
 }

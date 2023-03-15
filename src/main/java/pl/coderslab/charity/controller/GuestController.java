@@ -15,12 +15,6 @@ import javax.mail.MessagingException;
 public class GuestController {
     private final UserService userService;
 
-    @GetMapping("/login")
-    public String login() {
-        return "guest/login";
-    }
-
-
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
@@ -53,7 +47,7 @@ public class GuestController {
     @GetMapping("/password-token/{tokenString}")
     public String passwordToken(@PathVariable String tokenString, Model model) {
         String string = userService.resetPasswordReceive(tokenString);
-        if ("guest/token-not-found".equals(string)) {
+        if (!string.contains("@")) {
             return string;
         } else {
             model.addAttribute("email", string);

@@ -3,6 +3,7 @@ package pl.coderslab.charity.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.coderslab.charity.entity.Role;
 import pl.coderslab.charity.entity.Token;
 import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.repository.RoleRepository;
@@ -19,6 +20,7 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final EmailService emailService;
     private final TokenRepository tokenRepository;
+    private final TokenService tokenService;
 
     public void saveWithHash(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -37,6 +39,12 @@ public class UserService {
             return "guest/token-not-found";
         }
         User user = token.getUser();
+        if (!tokenService.checkIfTokenValid(token)) {
+            tokenRepository.delete(token);
+            userRepository.removeRolesFromUser(user.getId());
+            userRepository.delete(user);
+            return "guest/token-expired";
+        }
         user.setActive(true);
         userRepository.save(user);
         tokenRepository.delete(token);
@@ -57,6 +65,10 @@ public class UserService {
         if (token == null) {
             return "guest/token-not-found";
         }
+        if (!tokenService.checkIfTokenValid(token)) {
+            tokenRepository.delete(token);
+            return "guest/token-expired";
+        }
         String email = token.getUser().getEmail();
         tokenRepository.delete(token);
         return email;
@@ -67,5 +79,4 @@ public class UserService {
         user.setPassword(password);
         saveWithHash(user);
     }
-
 }

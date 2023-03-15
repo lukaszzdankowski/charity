@@ -9,8 +9,8 @@
 
     <div class="slogan container container--90">
         <h2>
-            Dziękujemy za utworzenie konta.<br>
-            Aby aktywować konto odczytaj wysłaną przez nas wiadomość e-mail.
+            Twój token wygasł.<br>
+            Prosimy o ponowienie operacji.
         </h2>
     </div>
 </header>

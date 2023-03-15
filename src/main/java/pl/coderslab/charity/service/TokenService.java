@@ -6,6 +6,10 @@ import pl.coderslab.charity.entity.Token;
 import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.repository.TokenRepository;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.UUID;
 
 @Service
@@ -13,10 +17,9 @@ import java.util.UUID;
 public class TokenService {
     private final TokenRepository tokenRepository;
 
-    public Token generateToken(User user, String purpose) {
+    public Token generateToken(User user) {
         Token token = new Token();
-        token.setUser(user);//czy tu całego USERA czy mozna id
-        token.setPurpose(purpose);
+        token.setUser(user);
 
         String hashCode = UUID.randomUUID().toString();
         while (tokenRepository.existsById(hashCode)) {
@@ -26,5 +29,14 @@ public class TokenService {
 
         tokenRepository.save(token);
         return token;
+    }
+
+    public boolean checkIfTokenValid(Token token) {
+        Instant tokenTime = token.getCreated().toInstant(ZoneOffset.UTC);
+        Instant now = LocalDateTime.now().toInstant(ZoneOffset.UTC);
+        if (Duration.between(tokenTime, now).getSeconds() < (30 * 60)) {
+            return true;
+        }
+        return false;
     }
 }

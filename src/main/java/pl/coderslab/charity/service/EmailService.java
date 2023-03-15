@@ -54,7 +54,7 @@ public class EmailService {
         mimeMessageHelper.setSubject("Oddam w dobre ręce - potwierdzenie rejestracji");
         mimeMessageHelper.setTo(user.getEmail());
 
-        Token token = tokenService.generateToken(user, "registration");
+        Token token = tokenService.generateToken(user);
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
@@ -76,7 +76,7 @@ public class EmailService {
         mimeMessageHelper.setSubject("Oddam w dobre ręce - resetowanie hasła");
         mimeMessageHelper.setTo(user.getEmail());
 
-        Token token = tokenService.generateToken(user, "passwordReset");
+        Token token = tokenService.generateToken(user);
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
