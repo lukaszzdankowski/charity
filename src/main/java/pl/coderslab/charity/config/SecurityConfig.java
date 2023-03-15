@@ -39,6 +39,6 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-        return new SimpleUrlAuthenticationSuccessHandlerImpl();
+        return new AuthenticationSuccessHandlerImpl();
     }
 }

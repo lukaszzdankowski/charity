@@ -15,6 +15,11 @@ import javax.mail.MessagingException;
 public class GuestController {
     private final UserService userService;
 
+    @GetMapping("/not-active")
+    public String notActiveUserLogin() {
+        return "guest/user-not-active";
+    }
+
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());

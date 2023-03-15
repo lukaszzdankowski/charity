@@ -3,6 +3,7 @@ package pl.coderslab.charity.config;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 
-public class SimpleUrlAuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
+public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
 
 
     @Override
@@ -20,10 +21,15 @@ public class SimpleUrlAuthenticationSuccessHandlerImpl implements Authentication
                                         Authentication authentication) throws IOException {
         String targetURL;
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean enabled = ((UserDetails) authentication.getPrincipal()).isEnabled();
         if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             targetURL = "/admin/home";
         } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            targetURL = "/user/home";
+            if (enabled) {
+                targetURL = "/user/home";
+            } else {
+                targetURL = "/guest/not-active";
+            }
         } else {
             throw new IllegalStateException("Role not found for this user");//czy ok obsługa braku roli dla użytkownika
         }
