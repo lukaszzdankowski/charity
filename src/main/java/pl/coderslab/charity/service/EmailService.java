@@ -7,22 +7,19 @@ import org.springframework.stereotype.Service;
 import pl.coderslab.charity.entity.Donation;
 import pl.coderslab.charity.entity.Token;
 import pl.coderslab.charity.entity.User;
-import pl.coderslab.charity.repository.UserRepository;
 
 import javax.activation.FileDataSource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
-import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
 public class EmailService {
     private final JavaMailSender javaMailSender;
-    private final UserRepository userRepository;
     private final TokenService tokenService;
 
-    public void sendSummary(Principal principal, Donation donation) throws MessagingException {
+    public void sendSummary(User user, Donation donation) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
@@ -30,9 +27,8 @@ public class EmailService {
         mimeMessageHelper.addAttachment("With love...", fileDataSource);
 
         mimeMessageHelper.setSubject("Oddam w dobre ręce - informacje o odbiorze");
-        mimeMessageHelper.setTo(principal.getName());
+        mimeMessageHelper.setTo(user.getEmail());
 
-        User user = userRepository.findByEmail(principal.getName()).orElse(null);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append("Witaj ").append(user.getName()).append("\n")

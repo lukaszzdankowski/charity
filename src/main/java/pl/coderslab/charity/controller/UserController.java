@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.entity.Donation;
+import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.service.CategoryService;
 import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.InstitutionService;
+import pl.coderslab.charity.service.UserService;
 
 import javax.mail.MessagingException;
 import java.security.Principal;
@@ -21,6 +23,7 @@ public class UserController {
     private final CategoryService categoryService;
     private final InstitutionService institutionService;
     private final DonationService donationService;
+    private final UserService userService;
 
     @GetMapping("/home")
     public String userHome() {
@@ -36,8 +39,9 @@ public class UserController {
     }
 
     @PostMapping("/donation/form")
-    public String saveDonation(Donation donation, Principal principal) throws MessagingException {
-        donationService.saveAndSendMessage(donation, principal);
+    public String saveDonation(Principal principal, Donation donation) throws MessagingException {
+        User user = userService.getUserByEmail(principal.getName());
+        donationService.saveAndSendMessage(user, donation);
         return "user/donation-confirmation";
     }
 }

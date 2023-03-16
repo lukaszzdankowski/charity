@@ -3,10 +3,10 @@ package pl.coderslab.charity.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.coderslab.charity.entity.Donation;
+import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.repository.DonationRepository;
 
 import javax.mail.MessagingException;
-import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +22,8 @@ public class DonationService {
         return donationRepository.count();
     }
 
-    public void saveAndSendMessage(Donation donation, Principal principal) throws MessagingException {
+    public void saveAndSendMessage(User user, Donation donation) throws MessagingException {
         donationRepository.save(donation);
-        emailService.sendSummary(principal, donation);
+        emailService.sendSummary(user, donation);
     }
 }

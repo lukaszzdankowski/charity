@@ -21,6 +21,10 @@ public class UserService {
     private final TokenRepository tokenRepository;
     private final TokenService tokenService;
 
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
     public void saveWithHash(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
