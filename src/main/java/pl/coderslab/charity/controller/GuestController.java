@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.entity.User;
+import pl.coderslab.charity.service.TokenService;
 import pl.coderslab.charity.service.UserService;
 
 import javax.mail.MessagingException;
@@ -14,8 +15,9 @@ import javax.mail.MessagingException;
 @RequiredArgsConstructor
 public class GuestController {
     private final UserService userService;
+    private final TokenService tokenService;
 
-    @GetMapping("/not-active")
+    @GetMapping("/not-active")//nie używana
     public String notActiveUserLogin() {
         return "guest/user-not-active";
     }
@@ -34,8 +36,15 @@ public class GuestController {
 
     @GetMapping("/register-token/{tokenString}")
     public String registerToken(@PathVariable String tokenString) {
-        String redirect = userService.setUserActive(tokenString);
-        return redirect;
+        int redirectCase = userService.setUserActive(tokenString);
+        switch (redirectCase) {
+            case 1:
+                return "guest/token-expired";
+            case 2:
+                return "guest/register-confirmed";
+            default:
+                return "guest/token-not-found";
+        }
     }
 
     @GetMapping("/password-forgot")
@@ -45,18 +54,26 @@ public class GuestController {
 
     @PostMapping("/password-forgot")
     public String resetPasswordSend(@RequestParam String email) throws MessagingException {
-        String redirect = userService.resetPasswordSend(email);
-        return redirect;
+        boolean redirectCase = userService.resetPasswordSend(email);
+        if (redirectCase) {
+            return "guest/password-forgot-sent";
+        } else {
+            return "guest/password-forgot-no-email";
+        }
     }
 
     @GetMapping("/password-token/{tokenString}")
     public String passwordToken(@PathVariable String tokenString, Model model) {
-        String string = userService.resetPasswordReceive(tokenString);
-        if (!string.contains("@")) {
-            return string;
-        } else {
-            model.addAttribute("email", string);
-            return "guest/password-reset-form";
+        int redirectCase = userService.resetPasswordReceive(tokenString);
+        switch (redirectCase) {
+            case 1:
+                return "guest/token-expired";
+            case 2:
+                String email = tokenService.retrieveEmailAndDeleteToken(tokenString);
+                model.addAttribute("email", email);
+                return "guest/password-reset-form";
+            default:
+                return "guest/token-not-found";
         }
     }
 

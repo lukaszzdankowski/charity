@@ -2,17 +2,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <nav class="container container--70">
     <%--not logged--%>
+<sec:authorize access="!isAuthenticated()">
     <ul class="nav--actions">
         <li><a href="<c:url value="/login"/>" class="btn btn--small btn--without-border">Zaloguj</a></li>
         <li><a href="<c:url value="/guest/register"/>" class="btn btn--small btn--highlighted">Załóż konto</a></li>
         <li><a href="<c:url value="/guest/password-forgot"/>" class="btn btn--small btn--highlighted">Zapomniałem hasła</a></li>
     </ul>
+</sec:authorize>
     <%--logged--%>
+<sec:authorize access="isAuthenticated()">
     <ul class="nav--actions">
-        <li class="logged-user">Witaj Agata
+        <li class="logged-user">Witaj <sec:authentication property="principal.username" />
             <ul class="dropdown">
                 <li><a href="#">Profil</a></li>
                 <li><a href="#">Moje zbiórki</a></li>
@@ -20,6 +24,7 @@
             </ul>
         </li>
     </ul>
+</sec:authorize>
     <%--common--%>
     <ul>
         <li><a href="" class="btn btn--without-border active">Start</a></li>

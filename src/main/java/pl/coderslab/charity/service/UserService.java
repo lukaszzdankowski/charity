@@ -3,7 +3,6 @@ package pl.coderslab.charity.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.coderslab.charity.entity.Role;
 import pl.coderslab.charity.entity.Token;
 import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.repository.RoleRepository;
@@ -33,45 +32,43 @@ public class UserService {
         emailService.sendRegistration(user);
     }
 
-    public String setUserActive(String tokenString) {
+    public int setUserActive(String tokenString) {
         Token token = tokenRepository.findById(tokenString).orElse(null);
         if (token == null) {
-            return "guest/token-not-found";
+            return 0;
         }
         User user = token.getUser();
         if (!tokenService.checkIfTokenValid(token)) {
             tokenRepository.delete(token);
             userRepository.removeRolesFromUser(user.getId());
             userRepository.delete(user);
-            return "guest/token-expired";
+            return 1;
         }
         user.setActive(true);
         userRepository.save(user);
         tokenRepository.delete(token);
-        return "guest/register-confirmed";
+        return 2;
     }
 
-    public String resetPasswordSend(String email) throws MessagingException {
+    public boolean resetPasswordSend(String email) throws MessagingException {
         User user = userRepository.findByEmail(email).orElse(null);
         if (user == null) {
-            return "guest/password-forgot-no-email";
+            return false;
         }
         emailService.sendReminder(user);
-        return "guest/password-forgot-sent";
+        return true;
     }
 
-    public String resetPasswordReceive(String tokenString) {
+    public int resetPasswordReceive(String tokenString) {
         Token token = tokenRepository.findById(tokenString).orElse(null);
         if (token == null) {
-            return "guest/token-not-found";
+            return 0;
         }
         if (!tokenService.checkIfTokenValid(token)) {
             tokenRepository.delete(token);
-            return "guest/token-expired";
+            return 1;
         }
-        String email = token.getUser().getEmail();
-        tokenRepository.delete(token);
-        return email;
+        return 2;
     }
 
     public void resetPassword(String email, String password) {

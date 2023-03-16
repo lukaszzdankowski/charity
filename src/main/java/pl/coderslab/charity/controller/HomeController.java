@@ -27,4 +27,14 @@ public class HomeController {
     public String login() {
         return "login";
     }
+
+    @GetMapping("/denied")
+    public String accessDenied() {
+        return "access-denied";
+    }
+
+    @GetMapping("/no-page")//nie używana
+    public String noPage() {
+        return "no-such-page";
+    }
 }

@@ -17,17 +17,19 @@ public class SecurityConfig {
                 .csrf().disable()//co robi csfr i czy tylko przy loginie
                 .authorizeRequests()
                 .antMatchers("/", "/resources/**", "/login", "/guest/**").permitAll()
-                .antMatchers("/test").permitAll()
+//                .antMatchers("/test").permitAll()
 //                .antMatchers("/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic()//czy to porzebne?
+                .httpBasic()
                 .and()
                 .formLogin().loginPage("/login").successHandler(myAuthenticationSuccessHandler())
                 .and()
-                .logout().logoutSuccessUrl("/");
+                .logout().logoutSuccessUrl("/")
+                .and()
+                .exceptionHandling().accessDeniedPage("/denied");
 
         return http.build();
     }
