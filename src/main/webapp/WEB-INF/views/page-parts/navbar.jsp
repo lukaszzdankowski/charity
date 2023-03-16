@@ -16,7 +16,7 @@
     <%--logged--%>
 <sec:authorize access="isAuthenticated()">
     <ul class="nav--actions">
-        <li class="logged-user">Witaj <sec:authentication property="principal.username" />
+        <li class="logged-user">Witaj <sec:authentication property="principal.name" />
             <ul class="dropdown">
                 <li><a href="#">Profil</a></li>
                 <li><a href="#">Moje zbiórki</a></li>
