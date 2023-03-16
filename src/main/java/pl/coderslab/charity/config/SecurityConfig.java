@@ -14,7 +14,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()//co robi csfr i czy tylko przy loginie
+//                .csrf().disable()//co robi csfr i czy tylko przy loginie
                 .authorizeRequests()
                 .antMatchers("/", "/resources/**", "/login", "/guest/**").permitAll()
 //                .antMatchers("/test").permitAll()
