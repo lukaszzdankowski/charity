@@ -16,6 +16,7 @@
             <input type="email" name="email" placeholder="Email"/>
         </div>
         Na podany adres e-mail zostanie wysłana wiadomość ze wskazówkami do odzyskania konta.
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div class="form-group form-group--buttons">
             <button class="btn" type="submit">Wyślij email</button>
         </div>

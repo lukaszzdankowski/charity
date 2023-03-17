@@ -28,6 +28,7 @@
             <input type="password" name="password2" placeholder="Powtórz hasło"/>
         </div>
 
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div class="form-group form-group--buttons">
             <a href="login.html" class="btn btn--without-border">Zaloguj się</a>
             <button class="btn" type="submit">Załóż konto</button>

@@ -20,6 +20,7 @@
         </div>
 
         <input type="hidden" name="email" value="${email}">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div class="form-group form-group--buttons">
             <button class="btn" type="submit">Zmień hasło</button>
         </div>
