@@ -25,7 +25,7 @@ public class GuestController {
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
-        return "register-form";
+        return "guest/register-form";
     }
 
     @PostMapping("/register")
