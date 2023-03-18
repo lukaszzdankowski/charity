@@ -40,8 +40,8 @@ public class TokenService {
         return false;
     }
 
-    public String retrieveEmailAndDeleteToken(String tokenString) throws NullPointerException {
-        Token token = tokenRepository.findById(tokenString).orElse(null);
+    public String retrieveEmailAndDeleteToken(String tokenString) {
+        Token token = tokenRepository.findById(tokenString).orElseThrow(RuntimeException::new);
         String email = token.getUser().getEmail();
         tokenRepository.delete(token);
         return email;
