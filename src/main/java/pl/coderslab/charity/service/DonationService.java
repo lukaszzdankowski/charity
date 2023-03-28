@@ -35,9 +35,19 @@ public class DonationService {
         return donationRepository.findAllByUser(user);
     }
 
+    public List<Donation> listAllDonations() {
+        return donationRepository.findAll();
+    }
+
     public void setDonationAsDelivered(String donationId) {
         Donation donation = donationRepository.findById(Long.parseLong(donationId)).orElseThrow(RuntimeException::new);
         donation.setStatus(DonationStatus.DELIVERED);
+        donationRepository.save(donation);
+    }
+
+    public void setDonationAsArchived(String donationId) {
+        Donation donation = donationRepository.findById(Long.parseLong(donationId)).orElseThrow(RuntimeException::new);
+        donation.setStatus(DonationStatus.ARCHIVED);
         donationRepository.save(donation);
     }
 }
