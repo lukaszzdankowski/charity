@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.entity.Donation;
@@ -15,6 +16,7 @@ import pl.coderslab.charity.service.UserService;
 
 import javax.mail.MessagingException;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -30,7 +32,7 @@ public class UserController {
         return "user/home-user";
     }
 
-    @GetMapping("/donation/form")
+    @GetMapping("/donation-add")
     public String formDisplay(Model model) {
         model.addAttribute("donation", new Donation());
         model.addAttribute("categoryList", categoryService.getCategories());
@@ -38,10 +40,24 @@ public class UserController {
         return "user/donation-form";
     }
 
-    @PostMapping("/donation/form")
+    @PostMapping("/donation-add")
     public String saveDonation(Principal principal, Donation donation) throws MessagingException {
         User user = userService.getUserByEmail(principal.getName());
         donationService.saveAndSendMessage(user, donation);
         return "user/donation-confirmation";
+    }
+
+    @GetMapping("/donation-list")
+    public String showDonations(Principal principal, Model model) {
+        User user = userService.getUserByEmail(principal.getName());
+        List<Donation> donations = donationService.donationListForUser(user);
+        model.addAttribute("donations", donations);
+        return "user/donation-list";
+    }
+
+    @GetMapping("/donation-delivered/{donationId}")
+    public String setDonationAsDelivered(@PathVariable String donationId) {
+        donationService.setDonationAsDelivered(donationId);
+        return "redirect:/user/donation-list";
     }
 }
