@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -15,6 +16,16 @@
                     <td>${item.pickUpDate}</td>
                     <td>${item.pickUpTime}</td>
                     <td>${item.status}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${item.status=='REPORTED'}">
+                                <a href="<c:url value="/courier/donation-received/${item.id}"/>" class="btn btn--small btn--without-border">Oznacz jako Odebrane</a>
+                            </c:when>
+                            <c:when test="${item.status=='RECEIVED'}">
+                                <a href="<c:url value="/courier/donation-delivered/${item.id}"/>" class="btn btn--small btn--without-border">Oznacz jako Dostarczone</a>
+                            </c:when>
+                        </c:choose>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

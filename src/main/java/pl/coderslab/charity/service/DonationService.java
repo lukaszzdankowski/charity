@@ -32,14 +32,26 @@ public class DonationService {
         emailService.sendSummary(user, donation);
     }
 
+    public List<Donation> listAllDonations() {
+        return donationRepository.findAll();
+    }
+
     public List<Donation> donationListForUser(User user) {
         return donationRepository.findAllByUser(user).stream()
                 .filter(donation -> !donation.getStatus().equals(DonationStatus.ARCHIVED))
                 .collect(Collectors.toList());
     }
 
-    public List<Donation> listAllDonations() {
-        return donationRepository.findAll();
+    public List<Donation> donationListForCourier() {
+        return donationRepository.findAll().stream()
+                .filter(donation -> !donation.getStatus().equals(DonationStatus.ARCHIVED))
+                .collect(Collectors.toList());
+    }
+
+    public void setDonationAsReceived(String donationId) {
+        Donation donation = donationRepository.findById(Long.parseLong(donationId)).orElseThrow(RuntimeException::new);
+        donation.setStatus(DonationStatus.RECEIVED);
+        donationRepository.save(donation);
     }
 
     public void setDonationAsDelivered(String donationId) {

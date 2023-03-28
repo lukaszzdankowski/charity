@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.entity.Donation;
@@ -53,11 +52,5 @@ public class UserController {
         List<Donation> donations = donationService.donationListForUser(user);
         model.addAttribute("donations", donations);
         return "user/donation-list";
-    }
-
-    @GetMapping("/donation-delivered/{donationId}")
-    public String setDonationAsDelivered(@PathVariable String donationId) {
-        donationService.setDonationAsDelivered(donationId);
-        return "redirect:/user/donation-list";
     }
 }
