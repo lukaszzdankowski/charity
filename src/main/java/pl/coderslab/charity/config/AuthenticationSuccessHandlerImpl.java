@@ -25,6 +25,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
         if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             targetURL = "/admin/home";
+        } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_COURIER"))) {
+            targetURL = "/courier/home";
         } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             targetURL = "/user/home";
         } else {
