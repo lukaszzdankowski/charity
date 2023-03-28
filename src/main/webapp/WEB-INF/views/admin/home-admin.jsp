@@ -9,7 +9,8 @@
 
     <div class="slogan container container--90">
         <h2>
-            Witamy na stronie administratora.
+            Witamy na stronie administratora.<br>
+            <a href="<c:url value="/admin/donation-list"/>" class="btn btn--small btn--without-border">Pokaż listę darów</a>
         </h2>
     </div>
 </header>

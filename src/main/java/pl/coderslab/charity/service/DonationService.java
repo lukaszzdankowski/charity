@@ -9,6 +9,7 @@ import pl.coderslab.charity.repository.DonationRepository;
 
 import javax.mail.MessagingException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,9 @@ public class DonationService {
     }
 
     public List<Donation> donationListForUser(User user) {
-        return donationRepository.findAllByUser(user);
+        return donationRepository.findAllByUser(user).stream()
+                .filter(donation -> !donation.getStatus().equals(DonationStatus.ARCHIVED))
+                .collect(Collectors.toList());
     }
 
     public List<Donation> listAllDonations() {
