@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+import pl.coderslab.charity.enumeration.DonationStatus;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -36,4 +37,9 @@ public class Donation {
     private LocalDate pickUpDate;
     private LocalTime pickUpTime;
     private String pickUpComment;
+    @Enumerated(EnumType.STRING)
+    private DonationStatus status;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
