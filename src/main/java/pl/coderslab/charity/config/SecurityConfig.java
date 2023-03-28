@@ -20,6 +20,7 @@ public class SecurityConfig {
 //                .antMatchers("/test").permitAll()
 //                .antMatchers("/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/courier/**").hasRole("COURIER")
                 .antMatchers("/user/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
