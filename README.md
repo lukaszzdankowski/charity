@@ -19,6 +19,7 @@ charity is a project for educational purpose and it is still beeing improved.
 <li>JSP</li>
 <li>JavaScript</li>
 <li>Lombok</li>
+<li>JUnit 5</li>
 </ul>
 
 <h2>Completed features of charity:</h2>
@@ -29,3 +30,4 @@ charity is a project for educational purpose and it is still beeing improved.
 ✅ Added homepage routing for authenticated User depending on User's role via AuthenticationSuccessHandler.<br>
 ✅ Added e-mail delivered token mechanism for account activation and password reset.<br>
 ✅ Completed a life cycle of donation from been Reported by User, Received and Delivered by Courier, to been Archived by Admin.<br>
+✅ On "develop_test" branch added some unit tests for DonationRepository and DonationService
