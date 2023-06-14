@@ -34,7 +34,7 @@ public class UserController {
     @GetMapping("/donation-add")
     public String formDisplay(Model model) {
         model.addAttribute("donation", new Donation());
-        model.addAttribute("categoryList", categoryService.getCategories());
+        model.addAttribute("categoryList", categoryService.getActiveCategories());
         model.addAttribute("institutionList", institutionService.getInstitutions());
         return "user/donation-form";
     }
