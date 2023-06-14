@@ -35,7 +35,7 @@ public class UserController {
     public String formDisplay(Model model) {
         model.addAttribute("donation", new Donation());
         model.addAttribute("categoryList", categoryService.getActiveCategories());
-        model.addAttribute("institutionList", institutionService.getInstitutions());
+        model.addAttribute("institutionList", institutionService.getActiveInstitutions());
         return "user/donation-form";
     }
 
