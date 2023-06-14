@@ -12,6 +12,7 @@
             Witamy na stronie administratora.<br>
             <a href="<c:url value="/admin/donation-list"/>" class="btn btn--small btn--without-border">Pokaż listę darów</a>
             <a href="<c:url value="/admin/CRUD/category/list"/>" class="btn btn--small btn--without-border">Pokaż listę kategorii</a>
+            <a href="<c:url value="/admin/CRUD/institution/list"/>" class="btn btn--small btn--without-border">Pokaż listę instytucji</a>
         </h2>
     </div>
 </header>

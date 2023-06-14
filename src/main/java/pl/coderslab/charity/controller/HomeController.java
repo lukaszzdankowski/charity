@@ -17,7 +17,7 @@ public class HomeController {
 
     @RequestMapping("/")
     public String homePage(Model model) {
-        model.addAttribute("institutionList", institutionService.getInstitutions());
+        model.addAttribute("institutionList", institutionService.getActiveInstitutions());
         model.addAttribute("quantityTotal", donationService.countTotalQuantity());
         model.addAttribute("donationsTotal", donationService.countTotalDonations());
         return "index";
