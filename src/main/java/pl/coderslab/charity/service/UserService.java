@@ -10,6 +10,8 @@ import pl.coderslab.charity.repository.TokenRepository;
 import pl.coderslab.charity.repository.UserRepository;
 
 import javax.mail.MessagingException;
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +22,15 @@ public class UserService {
     private final EmailService emailService;
     private final TokenRepository tokenRepository;
     private final TokenService tokenService;
+    private final DonationService donationService;
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    public User getUser(Long id) {
+        return userRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);
@@ -31,9 +42,28 @@ public class UserService {
     }
 
     public void saveNewUser(User user) throws MessagingException {
-        user.getRoles().add(roleRepository.getById(2L));
+        user.getRoles().add(roleRepository.findByName("ROLE_USER"));
         saveWithHash(user);
         emailService.sendRegistration(user);
+    }
+
+    public void saveCreatedUser(User user) throws MessagingException {
+        userRepository.save(user);
+        emailService.sendActivationForCreatedUser(user);
+    }
+
+    public void saveUserWithOldPassword(User user) {
+        String oldPassword = userRepository.findById(user.getId()).orElseThrow(RuntimeException::new).getPassword();
+        user.setPassword(oldPassword);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow(RuntimeException::new);
+        tokenService.deleteTokenByUser(user);
+        donationService.removeUserFromDonations(user);
+        userRepository.deleteById(id);
     }
 
     public int setUserActive(String tokenString) {
@@ -78,6 +108,13 @@ public class UserService {
     public void resetPassword(String email, String password) {
         User user = userRepository.findByEmail(email).orElse(null);
         user.setPassword(password);
+        saveWithHash(user);
+    }
+
+    public void activateCreated(String email, String password) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        user.setPassword(password);
+        user.setActive(true);
         saveWithHash(user);
     }
 }

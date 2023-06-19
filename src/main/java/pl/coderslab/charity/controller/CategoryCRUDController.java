@@ -33,7 +33,7 @@ public class CategoryCRUDController {
     }
 
     @PostMapping("/save")
-    public String processAddCategory(Category category) {
+    public String saveCategory(Category category) {
         categoryService.saveCategory(category);
         return "redirect:/admin/CRUD/category/list";
     }
@@ -46,7 +46,7 @@ public class CategoryCRUDController {
     }
 
     @GetMapping("/disable/{id}")
-    public String removeCategory(@PathVariable Long id) {
+    public String disableCategory(@PathVariable Long id) {
         categoryService.disableCategory(id);
         return "redirect:/admin/CRUD/category/list";
     }
