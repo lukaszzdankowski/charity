@@ -31,6 +31,10 @@ public class TokenService {
         return token;
     }
 
+    public void deleteTokenByUser(User user) {
+        tokenRepository.deleteAllByUser(user);
+    }
+
     public boolean checkIfTokenValid(Token token) {
         Instant tokenTime = token.getCreated().toInstant(ZoneOffset.UTC);
         Instant now = LocalDateTime.now().toInstant(ZoneOffset.UTC);

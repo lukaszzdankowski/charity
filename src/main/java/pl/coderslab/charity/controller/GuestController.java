@@ -83,4 +83,27 @@ public class GuestController {
         userService.resetPassword(email, password);
         return "guest/password-reset-confirmed";
     }
+
+    @GetMapping("/created-activation-token/{tokenString}")
+    public String activateCreatedForm(@PathVariable String tokenString,
+                                      Model model) {
+        int redirectCase = userService.resetPasswordReceive(tokenString);
+        switch (redirectCase) {
+            case 1:
+                return "guest/token-expired";
+            case 2:
+                String email = tokenService.retrieveEmailAndDeleteToken(tokenString);
+                model.addAttribute("email", email);
+                return "guest/created-activation-form";
+            default:
+                return "guest/token-not-found";
+        }
+    }
+
+    @PostMapping("/created-activation")
+    public String activateCreated(@RequestParam String email,
+                                @RequestParam String password) {
+        userService.activateCreated(email, password);
+        return "guest/password-reset-confirmed";
+    }
 }

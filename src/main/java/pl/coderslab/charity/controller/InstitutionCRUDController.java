@@ -33,7 +33,7 @@ public class InstitutionCRUDController {
     }
 
     @PostMapping("/save")
-    public String processAddInstitution(Institution institution) {
+    public String saveInstitution(Institution institution) {
         institutionService.saveInstitution(institution);
         return "redirect:/admin/CRUD/institution/list";
     }
@@ -46,7 +46,7 @@ public class InstitutionCRUDController {
     }
 
     @GetMapping("/disable/{id}")
-    public String removeInstitution(@PathVariable Long id) {
+    public String disableInstitution(@PathVariable Long id) {
         institutionService.disableInstitution(id);
         return "redirect:/admin/CRUD/institution/list";
     }

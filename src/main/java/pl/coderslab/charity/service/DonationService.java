@@ -48,6 +48,10 @@ public class DonationService {
                 .collect(Collectors.toList());
     }
 
+    public List<Donation> listAllDonationsForUser(User user) {
+        return donationRepository.findAllByUser(user);
+    }
+
     public void setDonationAsReceived(String donationId) {
         Donation donation = donationRepository.findById(Long.parseLong(donationId)).orElseThrow(RuntimeException::new);
         donation.setStatus(DonationStatus.RECEIVED);
@@ -64,5 +68,12 @@ public class DonationService {
         Donation donation = donationRepository.findById(Long.parseLong(donationId)).orElseThrow(RuntimeException::new);
         donation.setStatus(DonationStatus.ARCHIVED);
         donationRepository.save(donation);
+    }
+
+    public void removeUserFromDonations(User user) {
+        listAllDonationsForUser(user).stream()
+                .forEach(donation -> {
+                    donation.setUser(null);
+                });
     }
 }

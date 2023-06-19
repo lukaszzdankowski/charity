@@ -82,4 +82,25 @@ public class EmailService {
 
         javaMailSender.send(mimeMessage);
     }
+
+    public void sendActivationForCreatedUser(User user) throws MessagingException {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+        FileDataSource fileDataSource = new FileDataSource(new File("src/main/webapp/resources/images/about-us.jpg"));
+        mimeMessageHelper.addAttachment("With love...", fileDataSource);
+
+        mimeMessageHelper.setSubject("Oddam w dobre ręce - aktywacja konta");
+        mimeMessageHelper.setTo(user.getEmail());
+
+        Token token = tokenService.generateToken(user);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append("Kliknij poniższy link aby aktywować konto i ustawić hasło:\n")
+                .append("http://localhost:8080/guest/created-activation-token/").append(token.getHashCode());
+        mimeMessageHelper.setText(stringBuilder.toString());
+
+        javaMailSender.send(mimeMessage);
+    }
 }

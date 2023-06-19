@@ -40,6 +40,6 @@ public class Donation {
     @Enumerated(EnumType.STRING)
     private DonationStatus status;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 }
