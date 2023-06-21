@@ -53,4 +53,24 @@ public class UserController {
         model.addAttribute("donations", donations);
         return "user/donation-list";
     }
+
+    @GetMapping("/profile-edit")
+    public String profileEdit(Principal principal, Model model) {
+        User user = userService.getUserByEmail(principal.getName());
+        model.addAttribute("user", user);
+        return "user/profile-edit";
+    }
+
+    @PostMapping("/profile-edit")
+    public String update(User user) {
+        userService.saveUserWithOldPassword(user);
+        return "redirect:/user/home";
+    }
+
+    @GetMapping("/password-change")
+    public String changePassword(Principal principal, Model model) {
+        String email = principal.getName();
+        model.addAttribute("email", email);
+        return "guest/password-reset-form";
+    }
 }
