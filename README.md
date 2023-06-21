@@ -31,4 +31,5 @@ charity is a project for educational purpose and it is still beeing improved.
 ✅ Added e-mail delivered token mechanism for account activation and password reset.<br>
 ✅ Completed a life cycle of donation from been Reported by User, Received and Delivered by Courier, to been Archived by Admin.<br>
 ✅ Added basic CRUD operations.<br>
+✅ Added profile edition for user.<br>
 ✅ On "develop_test" branch added some unit tests for DonationRepository and DonationService
