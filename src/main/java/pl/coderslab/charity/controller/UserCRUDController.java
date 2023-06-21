@@ -13,6 +13,7 @@ import pl.coderslab.charity.service.RoleService;
 import pl.coderslab.charity.service.UserService;
 
 import javax.mail.MessagingException;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -60,7 +61,10 @@ public class UserCRUDController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id, Principal principal) {
+        if (principal.getName().equals(userService.getUser(id).getEmail())) {
+            return "admin/CRUD/users/cannot-delete";
+        }
         userService.deleteUser(id);
         return "redirect:/admin/CRUD/user/list";
     }
